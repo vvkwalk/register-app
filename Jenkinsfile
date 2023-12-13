@@ -37,7 +37,16 @@ pipeline {
                         sh "mvn sonar:sonar"
 		        }
 	           }	
-           }
+	   }
        }      
-   }
+       stage("Quality Gate"){
+           steps {
+               script {
+                    waitForQualityGate abortPipeline: false, credentialsId: 'jenkins-sonar'
+                }	
+            }
+
+        }
+    
+    }
 }
